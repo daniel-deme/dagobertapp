@@ -15,7 +15,7 @@ jobs:
       - name: FTP feltöltés a staging mappába
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ftp://cpanel32.tarhelypark.hu
+          server: cpanel32.tarhelypark.hu
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./  # Javítottuk: a helyi gyökérkönyvtár
