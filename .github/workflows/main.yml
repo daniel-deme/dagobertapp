@@ -1,9 +1,9 @@
-name: FTP Deploy
+name: FTP Deploy to Staging
 
 on:
   push:
     branches:
-      - main  # Ha a fő ágad neve más, írd át például "master"-re
+      - main  # Vagy "master", ha a fő ágad neve az
 
 jobs:
   ftp-deploy:
@@ -12,11 +12,12 @@ jobs:
       - name: GitHub tároló klónozása
         uses: actions/checkout@v3
 
-      - name: FTP feltöltés
+      - name: FTP feltöltés a staging mappába
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ftp://ftp.yourserver.com
+          server: ftp://cpanel32.tarhelypark.hu
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: .  # Ez a projekt gyökérkönyvtára
+          server-dir: /dagobertapp.com/staging  # Ide töltjük az adatokat
           dangerous-clean-slate: false  # Csak a módosított fájlokat tölti fel
