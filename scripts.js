@@ -40,6 +40,7 @@ function getBrowserLanguage() {
 const language = getBrowserLanguage().slice(0, 2); // Csak az első két karakter 
 
 async function loadLanguageFile(language) {
+    console.log("GITHUB!");
     try {
         const response = await fetch(`locales/${language}.json`);
         if (!response.ok) throw new Error("Language file not found");
