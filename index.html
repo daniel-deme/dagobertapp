@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Dagobert</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#f0f0f0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <meta property="og:title" content="Dagobert">
+    <meta property="og:url" content="https://dagobertapp.com">
+    <meta property="og:image" content="https://dagobertapp.com/svg/og.png">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+</head>
+
+<body>
+    
+    <div id="feedbackThanks">   
+        <img id="feedbackThanksIcon" src="svg/feedback_wink.svg" />
+        <p id="feedbackThanksText">t</p>
+    </div>
+    
+    <div id="homePage">
+        <div id="hero">
+            <div class="appName" style="display: flex;flex-direction: row;align-items: flex-start;gap:16px;">
+                <div class="title" style="color:var(--dark);">Dagobert</div>
+                <div style="font-size: 11px;background-color: var(--light);padding:0px 12px;font-weight: 600;text-transform: uppercase;border-radius: 4px;margin-top:8px;">beta</div>
+            </div>
+            <div class="title" id="heroUVP">Kezeld egyszerűen az ismétlődő kiadásaidat!</div>
+            <div class="ilu"><img src="svg/dagobert_ilu.svg" /></div>
+            <div>
+                <div class="copy" style="padding-bottom: 16px;font-weight: 600;" id="heroDescription">Dagobert egy egyszerű, mobilbarát alkalmazás, amely segít rendszerezni és követni az ismétlődő tranzakciókat, legyen szó előfizetésekről, közüzemi díjakról vagy más rendszeres kiadásokról.</div>
+                <div class="copy" id="heroValue">Ha eddig Google Sheets-ben vezetted ezeket, a Dagobert mindezt gyorsabban és kényelmesebben oldja meg, kifejezetten a mobilhasználók igényeire szabva. Ha egyáltalán nem vezetted, akkor talán most jött el az ideje.</div>
+            </div>
+        </div>
+        <div class="ctaContainer">
+            <div class="cta">
+                <button class="authButton" id="authButton">Kezdjük</button>
+            </div>
+        </div>
+        <div class="benefit">
+            <div><img src="svg/autosheet.svg" /></div>
+            <div class="head" id="autoSheetHead">Automatikus Google Sheet létrehozás és frissítés</div>
+            <div id="autoSheetDesc">A Dagobert automatikusan létrehozza a következő három hónapra vonatkozó Google Sheet-et, ahol kényelmesen vezetheted a rendszeres kiadásaidat. A béta tesztelés időszakában ezt a három hónapot manuálisan tudod frissíteni, miközben a jövőben további automatizációk várhatók.</div>
+        </div>
+        <div class="benefit">
+            <div><img src="svg/mobilelove.svg" /></div>
+            <div class="head" id="mobileLoveHead">Kifejezetten mobilhasználatra tervezve</div>
+            <div id="mobileLoveDesc">A legtöbb tranzakció manapság mobilon történik, és a Dagobert is ehhez igazodik. Az alkalmazás tiszta, átlátható felülettel rendelkezik, amelyet bárhol, bármikor könnyen elérhetsz, ami leegyszerűsíti a költségek kezelését.</div>
+        </div>
+        <div class="benefit">
+            <div><img src="svg/secure.svg" /></div>
+            <div class="head" id="secureHead">Maximális biztonság</div>
+            <div id="secureDesc">Tudjuk, hogy a pénzügyi adatok érzékeny információk. A Dagobert az adatokat közvetlenül a saját Google Drive-odra menti, és senki más nem fér hozzájuk. Az adatkezelés teljes mértékben a Google által biztosított biztonsági rendszerre épül, így adataid mindig védettek maradnak.</div>
+        </div>
+        <div class="benefit">
+            <div><img src="svg/beta.svg" /></div>
+            <div class="head" id="betaHead">Béta tesztelési időszak</div>
+            <div id="betaDesc">A Dagobert jelenleg béta tesztelés alatt áll, és az első három hónapban célunk, hogy minél több visszajelzést gyűjtsünk. Ötleteiddel és észrevételeiddel segítesz abban, hogy az alkalmazás a te igényeidhez is igazodjon.</div>
+        </div>
+        <div class="benefit">
+            <div><img src="svg/homescreen.svg" /></div>
+            <div class="head" id="homeScreenHead">Kényelmes elérés egy érintéssel</div>
+            <div id="homeScreenDesc">A Dagobert könnyen elhelyezhető a mobilod kezdőképernyőjén, mint egy natív alkalmazás. Így az alkalmazás böngészőkeret nélkül, teljes kijelzős módban működik, gyorsabb, tisztább és könnyebben kezelhető élményt nyújtva.</div>
+            <div style="font-weight: 600;">
+                <ol style="padding-left: 20px;">
+                    <li id="homeScreenStep1" style="padding-bottom: 16px;">Nyisd meg a Dagobert alkalmazást a böngésződben</li>
+                    <li id="homeScreenStep2" style="padding-bottom: 16px;">Érintsd meg a böngésző „Add to Home Screen” vagy „Hozzáadás a kezdőképernyőhöz” lehetőségét.</li>
+                    <li id="homeScreenStep3">Ikonként hozzáadódik a kezdőképernyőhöz, így egyetlen érintéssel közvetlenül elérheted az alkalmazást.</li>
+                </ol> 
+            </div>
+        </div>
+        <div class="ctaContainer">
+                <div class="cta">
+                    <button class="authButton" id="authButtonAgain">Kezdjük</button>
+                </div>
+            </div>
+    </div>
+    <div id="footer" class="footer">
+        <div class="foot">
+            <div class="footer-item fluid">Dagobert 2024</div>
+            <div class="footer-item"><a href="privacypolicy.html"  target="_blank" id="privacyLink">C</a></div>
+            <div class="footer-item"><a href="mailto:contact@dagobertapp.com" id="contactLink">P</a></div>
+        </div>
+    </div>
+
+    
+    <div id="headerContainer">
+        <div id="header">
+            <div onclick="openTabSelector()">
+                <img src="svg/calendar.svg" style="width: 24px; height:24px;"/>
+            </div>
+                
+            <div id="monthSelector">
+                <p id="tabName">Dagobert</p>
+                <p id="tabName2" class="active">February</p>
+                <p id="tabName3" class="active">March</p>
+                <p id="tabName4" class="active">April</p>
+                <p id="tabName5" class="active">May</p>
+                <p id="tabName6" class="active">June</p>
+                <p id="tabName7" class="active">July</p>
+
+
+            </div>
+                
+                
+            
+        </div>
+        <div id="stats" onclick="toggleChartSum()">
+            <div id="chart">
+                <div class="paidChart"></div>
+                <div class="notPaidChart"></div>
+                <div class="unknownChart"></div>
+            </div>
+            <div id="statNumbers">
+                <div id="statLabel">Not Paid Total</div>
+                <div id="statAmounts">
+                    <div class="statAmount">123 456 HUF</div>
+                </div>
+            </div>
+
+        </div>
+        <div id="filters">
+            <div class="chip active" name="category" id="filterCategory" onclick="filterList('category')">Kategoriák</div>
+            <div class="chip" name="unpaid"id="filterNotPaid" onclick="filterList('unpaid')">Nem fizetett</div>
+            <div class="chip" name="date"id="filterDate" onclick="filterList('date')">Dátum</div>
+            <div class="chip" name="payment"id="filterPayment" onclick="filterList('payment')">Fizetési mód</div>
+        </div>
+    </div>
+    
+    <div id="list">
+            
+            
+        <div id="items-container"></div>
+        
+        <div id="emptyState" style="display:none;flex: 1;">
+            
+            <div onclick="addDetails()"><img src="svg/empty.svg" /></div>
+            <div style="display: flex;flex-direction: column; gap:4px;align-content: center;justify-content: center;">
+                <div id="emptyTitle">No items so far...</div>
+                <div id="emptyCTA">Add your first.</div>
+            </div>
+            
+        </div>
+        
+        <div id="appFooter" class="footer" style="display: none;">
+            <div class="foot" style="padding: 48px 0px;justify-content:flex-start;">
+                <div class="footer-item"><a href="updates.html" target="_blank" id="appFooterVersion">D</a></div>
+                <div class="footer-item"><a href="mailto:contact@dagobertapp.com" target="_blank" id="contactLinkInner">P</a></div>
+                <div class="footer-item"><a onclick="addFeedback()" id="feedbackLink">P</a></div>
+                <div class="footer-item"><a  onclick="logout()" id="logOutLink">P</a></div>
+            </div>
+        </div>
+            
+    </div>
+
+    
+    <div id="detailsContainer">
+        <div id="detailsDialog">
+            <div style="display: flex; flex-direction: row;align-items: center;gap:4px;width:auto;">
+                <p class="label" id="itemLabel" style="flex-grow: 1;color:var(--grey);padding-left:0px;">Tétel</p>
+                <div onclick="closeDetails()"><img src="svg/close.svg" /></div>
+            </div> 
+            <form style="display: flex; flex-direction:column; gap:0px;padding-bottom: 40px;">
+                <input type="text" id="itemName" name="Name"  placeholder="Tétel neve" oninput="formValidation()">
+                <div class="formRow">
+                    <img src="svg/category.svg" />
+                    <div style="display: flex;flex-direction: row;align-items: center; gap:0px;width:100%;">
+                        <input type="text" id="itemCategory" name="Category" placeholder="Kategória" oninput="formValidation()">
+                        <div style="width: 24px; height:24px;">
+                            <select class="hidedSelector" id="categorySelect" oninput="setInput('category')">
+                            </select>
+                            <img src="svg/list.svg" style="position:relative;pointer-events: none;left:4px;top:4px;"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="formRow">
+                    <img src="svg/amount.svg" />
+                    <input type="text" pattern="[0-9]*" inputmode="numeric" id="itemAmount" name="Amount" placeholder="Összeg" oninput="formValidation()">
+                    
+                    <div style="width: 24px; height:24px;">
+                        <select  class="hidedSelector" id="currencySelect" oninput="setInput('currency')">
+                            <option value disabled>Currency</option> 
+                            <option value="HUF">HUF</option> 
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="CAD">CAD</option>
+                        </select>
+                        <div id="itemCurrency" style="text-align: center;position:relative;pointer-events: none;left:0px;top:4px;font-size:10px;text-transform: uppercase;padding-top:2px;font-weight:500;"></div>
+                    </div>
+                </div>
+                
+                
+
+                <div class="formRow">
+                    <img src="svg/recurring.svg" />
+                    <div style="display: flex;flex-direction: row;align-items: center; gap:0px;width:100%;">
+                        <input type="text" id="itemFrequency" name="Frequency" placeholder="Ismétlődés" oninput="formValidation()">
+                        
+                        <div style="width: 24px; height:24px;">
+                            <select class="hidedSelector" id="frequencySelect" oninput="setInput('frequency')">
+                                <option value disabled id="frequencyLabel">Frequency</option> 
+                                <option value="0" id="frequencyLabel0">No frequency</option> 
+                                <option value="1" id="frequencyLabel1">Every month</option>
+                                <option value="3" id="frequencyLabel3">Every 3 months</option>
+                                <option value="6" id="frequencyLabel6">Every 6 months</option>
+                                <option value="12" id="frequencyLabel12">Every year</option>
+                            </select>
+                            <img src="svg/edit.svg" style="position:relative;pointer-events: none;left:4px;top:4px;"/>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="formRow" style="align-items: flex-start;">
+                    <div style="padding-top: 16px;">
+                            <img src="svg/payment.svg"/>
+                    </div> 
+                    <div style="display: flex; flex-direction:column; gap:0px;width:100%;">
+                        <div style="display: flex;flex-direction: row;align-items: center;">
+                            <input type="text" id="itemDate" name="Date" placeholder="Dátum" oninput="formValidation()">
+                            <div style="width: 24px; height: 24px;">
+                                <input class="hidedSelector" value="" type="date" id="dateSelect" oninput="setInput('date')">
+                                <img src="svg/calendar.svg" style="position:relative;pointer-events: none;left:4px;top:4px;"/>
+                            </div>
+                        </div>
+                        <div style="display: flex;flex-direction: row;align-items: center;">
+                            <input type="text" id="itemPayment" name="Payment" placeholder="Fizetés módja" oninput="formValidation()">
+                            <div style="width: 24px; height:24px;">
+                                <select class="hidedSelector" id="paymentSelect" oninput="setInput('payment')">
+                                </select>
+                                <img src="svg/list.svg" style="position:relative;pointer-events: none;left:4px;top:4px;"/>
+                            </div>
+                        </div>
+                        
+                        <div onclick="togglePayment()" style="cursor: pointer; display: flex; flex-direction:row; gap:0px;height:48px;justify-content: center;height:56px;align-items: center;">
+                            <input style="display:none;" type="text" id="itemPaid" name="Paid" value="No">
+                            <input type="text" style="cursor: pointer;" id="itemPaidText" name="PaidText" placeholder="Nincs fizetve" readonly>
+                            <img id="itemPaidIcon" style="width:40px;height:26px;" src="svg/toggle_no.svg" />
+                            
+                        </div> 
+                    </div> 
+                </div> 
+                <div class="formRow" style="padding-bottom:24px;border-bottom: 0px solid var(--lightest);">
+                    <img src="svg/comment.svg" />
+                    <input type="text" id="itemComment" name="Comment" placeholder="Megjegyzés" oninput="formValidation()">
+                </div>
+                <div id="newControls" style="display: flex; flex-direction:row; gap:8px;width: 100%;">
+                    <div id="cancelNew" class="button secondary" onclick="closeDetails()">Mégsem</div>
+                    <div id="submitNew" class="button primary">Hozzáadás</div>
+                </div>
+                <div id="editControls" style="display: flex; flex-direction:row; gap:8px;width:100%; justify-content: space-between;">
+                    <div class="button secondary delete" onclick="removeItem()">
+                        <div style="padding-top:3px;"><img style="width:16px;height:16px;" src="svg/delete.svg" /></div>
+                        <div id="deleteItem">Tétel törlése</div>
+                    </div>
+                    <div id="submitUpdate" class="button primary">Mentés</div>
+                </div>
+            </form>
+        </div> 
+    </div> 
+    
+    
+    <div id="feedbackContainer">
+        <div id="feedbackDialog">
+            <div style="display: flex; flex-direction: row;align-items: center;gap:4px;width:auto;">
+                <p  class="head small" id="feedbackLabel" style="flex-grow: 1;color:var(--black);padding-left:0px;">t</p>
+                <div onclick="closeFeedback()"><img src="svg/close.svg" /></div>
+            </div>
+            <div>
+                <p id="feedbackDescription">t</p>
+            </div> 
+            <form id="feedbackForm" style="display: flex; flex-direction:column; gap:0px;padding-bottom: 40px;">
+                <div class="formRow" style="padding-bottom:24px;border-bottom: 0px solid var(--lightest);align-items: flex-start;">
+                    <img src="svg/feedbackForm.svg" />
+                    <textarea type="text" id="feedback" name="feedback" placeholder="t"></textarea>
+                </div>
+                <div id="feedbackControls" style="display: flex; flex-direction:row; gap:8px;width: 100%;">
+                    <div id="feedbackCancel" class="button secondary" onclick="closeFeedback()">t</div>
+                    <div id="feedbackSend" class="button primary" onclick="sendFeedback()">t</div>
+                </div>
+            </form>
+        </div> 
+    </div> 
+    
+    <div id="feedbackButton" onclick="addDetails()">   
+        <img id="feedbackIcon" src="svg/add.svg" />
+    </div>
+    
+    <div id="tabSelectorContainer">
+        <div id="tabSelector">
+        </div>
+    </div>
+    
+    
+    
+    <div id="fader"></div>
+    <div id="spinner"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+
+    <script src="scripts.js"></script>
+    <script src="sheet.js"></script>
+    <script src="auth.js"></script>
+    
+    
+</body>
+</html>

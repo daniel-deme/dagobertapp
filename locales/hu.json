@@ -1,0 +1,74 @@
+{
+    
+    "appFooterVersion": "Dagobert 0.4.3",
+    
+    "paid": "Fizetve",
+    "notPaid": "Nincs fizetve",
+    
+    "itemLabel": "Tétel",
+    "itemName": "Tétel neve",
+    "itemCategory": "Kategória (Számlák, Szórakozás, ...)",
+    "itemAmount": "Összeg",
+    "itemDate": "Dátum",
+    "itemPayment": "Kifizetés módja",
+    "itemComment": "Megjegyzés",
+    
+    "filterCategory": "Kategória alapján",
+    "filterNotPaid": "Csak nem fizetett",
+    "filterDate": "Dátum alapján",
+    "filterPayment": "Fizetési mód alapján",
+    
+    "cancelNew": "Mégsem",
+    "submitNew": "Hozzáadás",
+    "submitUpdate": "Mentés",
+    "deleteItem": "Tétel törlése",
+    "areYouSure": "Biztos vagy benne, hogy törölni szeretnéd ezt a tételt?",
+    "emptyTitle": "Add hozzá az első tételt!",
+    "emptyCTA": "Közmű számla, Streaming előfizetés, hitel, ...",
+    "newButton": "Hozzáadás",
+    
+    "feedbackLink": "Visszajelzés",
+    "feedbackLabel": "Ötletek, gondolatok, hibák",
+    "feedbackDescription": "Ha van ötleted arra, hogyan lehetne továbbfejleszteni az alkalmazást, találtál egy hibát, vagy csak szeretnéd megosztani a véleményed, kérlek, jelezd nekem!",
+    "feedback": "A visszajelzésed",
+    "feedbackCancel": "Mégsem",
+    "feedbackSend": "Küldés",
+    "feedbackThanksText": "Köszönöm, szuper vagy!",
+    
+    "privacyLink": "Adatvédelem",
+    "contactLink": "Kapcsolat",
+    "logOutLink": "Kijelentkezés",
+        
+    "heroUVP": "Kezeld egyszerűen az ismétlődő kiadásaidat!",
+    "heroDescription": "Dagobert egy egyszerű, mobilbarát alkalmazás, amely segít rendszerezni és követni az ismétlődő tranzakciókat, legyen szó előfizetésekről, közüzemi díjakról vagy más rendszeres kiadásokról.",
+    "heroValue": "Ha eddig Google Sheets-ben vezetted ezeket, a Dagobert mindezt gyorsabban és kényelmesebben oldja meg, kifejezetten a mobilhasználók igényeire szabva. Ha egyáltalán nem vezetted, akkor talán most jött el az ideje.",
+    "authButton":"Kezdjük",
+    
+    "autoSheetHead": "Automatikus Google Sheet létrehozás és frissítés",
+    "autoSheetDesc": "A Dagobert automatikusan létrehozza a következő három hónapra vonatkozó Google Sheet-et, ahol kényelmesen vezetheted a rendszeres kiadásaidat. A béta tesztelés időszakában ezt a három hónapot manuálisan tudod frissíteni, miközben a jövőben további automatizációk várhatók.",
+    "mobileLoveHead": "Kifejezetten mobilhasználatra tervezve",
+    "mobileLoveDesc": "A legtöbb tranzakció manapság mobilon történik, és a Dagobert is ehhez igazodik. Az alkalmazás tiszta, átlátható felülettel rendelkezik, amelyet bárhol, bármikor könnyen elérhetsz, ami leegyszerűsíti a költségek kezelését.",
+    "freeHead": "Ingyenes, és ingyenes is marad",
+    "freeDesc": "A Dagobert teljesen ingyenes, és a jövőben sem tervezünk díjakat vagy rejtett költségeket bevezetni. Az alkalmazás minden funkciója szabadon hozzáférhető.",
+    "secureHead": "Maximális biztonság",
+    "secureDesc": "Tudjuk, hogy a pénzügyi adatok érzékeny információk. A Dagobert az adatokat közvetlenül a saját Google Drive-odra menti, és senki más nem fér hozzájuk. Az adatkezelés teljes mértékben a Google által biztosított biztonsági rendszerre épül, így adataid mindig védettek maradnak.",
+    "betaHead": "Béta tesztelési időszak",
+    "betaDesc": "A Dagobert jelenleg béta tesztelés alatt áll, és az első három hónapban célunk, hogy minél több visszajelzést gyűjtsek. Ötleteiddel és észrevételeiddel segítesz abban, hogy az alkalmazás a te igényeidhez is igazodjon.",
+    "homeScreenHead": "Kényelmes elérés egy érintéssel",
+    "homeScreenDesc": "A Dagobert könnyen elhelyezhető a mobilod kezdőképernyőjén, mint egy natív alkalmazás. Így az alkalmazás böngészőkeret nélkül, teljes kijelzős módban működik, gyorsabb, tisztább és könnyebben kezelhető élményt nyújtva.",
+    
+    "homeScreenStep1": "Nyisd meg a Dagobert alkalmazást a böngésződben.",
+    "homeScreenStep2": "Érintsd meg a böngésző „Add to Home Screen” vagy „Hozzáadás a kezdőképernyőhöz” lehetőségét.",
+    "homeScreenStep3": "Ikonként hozzáadódik a kezdőképernyőhöz, így egyetlen érintéssel közvetlenül elérheted az alkalmazást.",
+    "statLabelPaid": "Fizetett Összes",
+    "statLabelNotPaid": "Nem Fizetett Összes",
+    
+    "frequency": "Ismétlődés",
+    "0frequency": "Nem ismétlődik",
+    "1frequency": "Havonta",
+    "3frequency": "3 havonta",
+    "6frequency": "6 havonta",
+    "12frequency": "Évente"
+
+    
+}

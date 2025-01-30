@@ -1,0 +1,1222 @@
+:root {
+    --white: #ffffff;
+    --lightest: #F8F8F8;
+    --lighter: #F0F0F0;
+    --light: #DDDDDD;
+    --grey: #B2B2B2;
+    --dark: #797979;
+    --black: #1A1A1A;
+    --red: #F16E6E;
+    --green: #6FCF97;
+    --yellow: #FFD400;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    
+    background-color:var(--lighter);
+    margin:auto;
+    font-family: Inter;
+    font-size:16px;
+}
+
+#stats {
+    
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    
+}
+
+#chart {
+    
+    height: 24px;
+    display: flex;
+    gap: 2px;
+    
+}
+
+#statNumbers {
+    
+    display: flex;
+    flex-direction: row;
+    padding-top: 16px;
+    transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out, padding 0.5s ease-in-out, margin 0.5s ease-in-out;
+    overflow: hidden; /* Tartalom rejtése eltűnéskor */
+    
+}
+
+#statLabel {
+    
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 400;
+    padding-top: 8px;
+    flex-grow: 1;
+    
+}
+
+#statAmounts {
+    
+}
+
+.unfocusedChart {
+    
+    height: 24px;
+    align-self: center;
+    
+}
+
+.statAmount {
+    
+    color: var(--black);
+    font-size: 32px;
+    font-weight: 700;
+    text-align: right;
+    
+}
+
+.paidChart {
+    
+    background-color: var(--light);
+    content: "000";
+    flex-grow: 1;
+    border-radius: 4px;
+    
+}
+
+.notPaidChart {
+    
+    background-color: var(--yellow);
+    content: "000";
+    flex-grow: 1;
+    border-radius: 4px;
+    
+}
+
+.unknownChart {
+    
+    border: 1px solid var(--yellow);
+    content: "000";
+    width: 16px;
+    border-radius: 4px;
+    
+}
+
+
+#emptyState {
+    
+
+    padding-top:40px;
+    display: none;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    gap: 24px;
+    font-family: Inter;
+    color: var(--black);
+    flex: 1;
+
+    
+}
+
+#emptyTitle {
+    
+    font-family: Inter;
+    color: var(--black);
+    font-size:18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+#emptyCTA {
+    
+    font-family: Inter;
+    color: var(--dark);
+    font-size:14px;
+    font-weight: 300;
+    text-align: center;
+}
+
+
+#newButton {
+    
+    padding-top:16px;
+    padding-bottom:16px;
+    background-color: #0082F8;
+    border-radius: 8px;
+    font-family: Inter;
+    font-size:14px;
+    font-weight: 600;
+    color: var(--white);
+    border: none;
+    width: 160px;
+    text-align: center;
+    margin: auto;
+    
+}
+
+#homePage {
+    
+
+    padding-top:40px;
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+    
+    font-family: Inter;
+    font-size:16px;
+    font-weight: 300;
+    line-height: 24px;
+    color: var(--black);
+    
+}
+
+.section {
+    
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    
+}
+
+a {
+    color: var(--black);
+    text-decoration: none;
+}
+
+#privacyPolicy {
+    
+    max-width: 600px;
+    margin:auto;
+    padding-top:40px;
+    padding-bottom:40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    
+    font-family: Inter;
+    font-size:14px;
+    font-weight: 300;
+    line-height: 21px;
+    color: var(--black);
+    letter-spacing: -.2px;
+    
+}
+
+
+
+#hero {
+    
+    max-width: 600px;
+    margin:auto;
+    padding-left: 32px;
+    padding-right: 32px;
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+.footer {
+    max-width: 664px;
+    width: 100%; /* A rendelkezésre álló teljes szélességet használja */
+    margin: auto;
+    box-sizing: border-box;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 18px;
+    color: var(--dark);
+    letter-spacing: -0.2px;
+    display: none;
+}
+
+.foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Elemek elosztása a szélek mentén */
+    width: 100%;
+    padding: 32px 32px;
+    box-sizing: border-box;
+    gap: 24px;
+}
+
+.footer-item.fluid {
+    flex-grow: 1;
+    text-align: left; /* Balra igazítás a fluid elemnél */
+}
+
+.footer-item {
+    flex-shrink: 0;
+}
+
+.title {
+    font-family: Inter;
+    font-size:40px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    line-height: 48px;
+}
+.ilu {
+    padding-top:40px;
+    padding-bottom:40px;
+}
+.benefit {
+    text-align: left;
+    max-width: 600px;
+    margin:auto;
+    padding: 8px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.benefit img {
+    height: 48px;
+}
+
+.ctaContainer {
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start; /* Balra igazítja a gombot */
+}
+
+.cta {
+    width: 100%;
+}
+
+.authButton {
+    width: 100%;
+    max-width: 320px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: #FFD400;
+    border-radius: 8px;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--black);
+    border: none;
+    box-sizing: border-box;
+}
+
+.head {
+    font-family: Inter;
+    font-size:24px;
+    font-weight: 600;
+    letter-spacing: -.3px;
+    line-height: 28px;
+}
+
+#faqContainer {
+    
+    background-color: var(--light);
+    
+}
+#faq {
+    
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 32px;
+    padding-bottom: 80px;
+    max-width: 600px;
+    margin:auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size:14px;
+    line-height: 21px;
+    background-color: var(--light);
+}
+
+#headerContainer {
+    
+    position: fixed;
+    left: 0;
+    right: 0;
+    
+    background-image: linear-gradient(to top, rgba(240,240,240,0), rgba(240,240,240,1), rgba(240,240,240,1), rgba(240,240,240,1), rgba(240,240,240,1));
+    
+    width:100%;
+    max-width: 600px;
+    
+    padding-top:24px;
+    padding-bottom:80px;
+    margin:0 auto;
+    
+    z-index:100;
+    box-sizing: border-box;
+    
+    display:none;
+    flex-direction: column;
+    gap: 24px;
+    
+    
+}
+
+#header {
+    
+    display: flex; 
+    flex-direction: row;
+    padding-left: 16px;
+    padding-right: 16px;
+    align-items: baseline;
+    width:auto;
+    gap:8px;
+    flex-grow: 1;
+}
+
+#monthSelector {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto; /* Vízszintes scrollolás engedélyezése */
+    white-space: nowrap; /* Az elemek egymás mellé kerüljenek, ne törjenek új sorba */
+    gap: 4px;
+    scrollbar-width: none; /* Rejtett scroll bar Firefoxban */
+    -ms-overflow-style: none; /* Rejtett scroll bar IE-ben */
+}
+
+#monthSelector div {
+    
+    font-size:32px;
+    color:var(--black);
+    font-weight:550;
+    letter-spacing: -25;
+}
+
+#monthSelector div.active {
+
+    color:var(--light);
+
+}
+
+.chip {
+    
+    line-height: 20px;
+    border-radius: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border: 1px solid var(--light);
+    font-size:13px;
+    font-weight: 500;
+    font-family: Inter;
+    color: var(--black);
+    white-space: nowrap;
+}
+
+.chip.active {
+    background-color: var(--light);
+    color: var(--dark);
+    
+}
+
+#filters {
+    
+    overflow: scroll;
+    padding-left:16px;
+    padding-right:16px;
+    display:flex;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+    gap:4px;
+}
+
+#filters::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+/* TAB választó */
+
+#tabSelectorContainer {
+    
+    padding-left: 16px;
+    padding-right: 16px;
+    z-index: 900;
+
+    transform:translate(-50%,-50%);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    
+    position:fixed;
+    top:16px;
+    left:50%;
+    
+    display:none;
+}
+
+#tabSelector {
+    
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.05);
+    
+}
+
+.tabItem {
+    
+    height: 60px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 1px solid var(--lighter);
+    color: var(--black);
+    font-family: Inter;
+    font-size: 16px;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    
+}
+
+.tabItem.disabled {
+    
+    cursor:default;
+}
+
+.tabItem img {
+    
+    padding-top:2px;
+}
+
+.tabItem.disabled p {
+    
+    color: var(--light);
+    
+}
+
+.tabText.year {
+    
+    color: var(--grey);
+    font-weight: 300;
+    
+}
+.tabText.month {
+    
+    color: var(--black);
+    font-weight: 600;
+    flex-grow: 1;
+    
+}
+
+.tabText.new {
+    
+    color: var(--black);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    flex-grow: 1;
+    
+}
+
+.listMenuElement.disabled p { color: var(--grey);}
+.listMenuElement.disabled span { color: var(--light);}
+.listMenuElement:last-child { border-bottom: 0px solid var(--white); }
+.listMenuElement.add { gap:8px;font-size: 13px; }
+.listMenuElement.add p {  }
+
+/* Animációk */
+
+.fade-in {
+    animation: fadeIn 0.5s forwards ease; /* 1 másodperces animáció, a végén marad az új állapot */
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: .9;
+    }
+}
+.fade-out {
+    animation: fadeOut 0.5s forwards ease; /* 1 másodperces animáció, a végén marad az új állapot */
+}
+@keyframes fadeOut {
+    from {
+        opacity: .9;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+#fader {
+    
+    position:fixed;
+    width:100%;
+    height:100%;
+    background-color: var(--lighter);
+    z-index: 200;
+    top:0px;
+    left:0px;
+    opacity: 0;
+    display:none;
+    
+}
+
+/* tabSelector animáció*/
+
+.move-in-tabselector {
+    animation: moveInTabSelector 0.4s forwards ease-in-out; /* 1 másodperces animáció, a végén marad az új állapot */
+}
+@keyframes moveInTabSelector {
+    from {
+        opacity:0;
+        transform:translate(-50%, -20%);
+    }
+    to {
+        opacity:1;
+        transform:translate(-50%, 0%);
+    }
+}
+
+.move-out-tabselector {
+    animation: moveOutTabSelector 0.2s forwards ease-in; /* 1 másodperces animáció, a végén marad az új állapot */
+}
+@keyframes moveOutTabSelector {
+    from {
+        opacity:1;
+        transform:translate(-50%, 0%);
+    }
+    to {
+        opacity:0;
+        transform:translate(-50%,-20%);
+    }
+}
+
+/* Adatlap animáció*/
+
+.move-in-sheet {
+    animation: moveInSheet 0.4s forwards ease-in-out; /* 1 másodperces animáció, a végén marad az új állapot */
+}
+@keyframes moveInSheet {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.move-out-sheet {
+    animation: moveOutSheet 0.3s forwards ease-in; /* 1 másodperces animáció, a végén marad az új állapot */
+}
+@keyframes moveOutSheet {
+    from {
+        transform: translateY(0%);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+
+/* Feedback */
+
+#feedbackContainer {
+    
+    display:flex; 
+    width: 100%; 
+    margin:auto;
+    align-items: center;
+    justify-content: center;
+    z-index: 600;
+    position: fixed;
+    bottom: 0;             /* Az elem az oldal aljához lesz igazítva */
+    left: 0;
+    right: 0;
+
+}
+
+#feedbackDialog {
+    
+    max-width:600px; 
+    width:100%;
+    margin:auto;
+    background-color: var(--white);
+    margin-top: 24px;
+    padding: 24px;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+    position: relative;
+    display: none;
+
+}
+
+#feedbackLabel {
+    
+    color: var(--black);
+}
+
+#feedback {
+    border: 0px;
+    font-size: 16px;
+    color: var(--black);
+    font-weight: 600;
+    height: 24px;
+    width: 100%;
+    font-family: Inter;
+    height: 120px;
+
+}
+#feedback:focus {
+    outline: none;
+    border: none;
+}
+#feedback::placeholder {
+    color: var(--grey);
+    font-weight: 300;
+}
+
+#feedbackDescription {
+    
+    color: var(--dark);
+    font-size: 14px;
+    line-height: 21px;
+    padding-top 16px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+}
+
+#feedbackButton {
+    
+    width: 60px;
+    height: 60px;
+    position:fixed;
+    bottom: 40px;
+    right: 16px;
+    background-color: rgba(221, 221, 221, .85);
+    border-radius: 36px;
+    display:none;
+    justify-content: center;
+    align-content: center;
+}
+
+#feedbackIcon {
+    
+    width: 24px;
+    height: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+}
+
+#feedbackThanks {
+    
+    display:flex; 
+    margin:auto;
+    align-items: center;
+    justify-content: center;
+    z-index: 600;
+    position: fixed;
+    top: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    gap: 16px;
+    border-radius: 16px;
+    background-color: rgba(26, 26, 26, .85);
+    left: 50%;
+    transform: translate(-50%, -200%);
+    max-width: 600px;
+    transition: transform 0.5s ease;
+
+}
+
+#feedbackThanks.show {
+    animation: feedbackSlideIn 0.4s forwards  ease-in-out;
+}
+
+#feedbackThanks.hide {
+    animation: feedbackSlideOut 0.2s forwards  ease-in;
+}
+
+#feedbackThanksText {
+    
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Inter;
+    white-space: nowrap;
+
+}
+
+@keyframes feedbackSlideIn {
+    from {
+        transform: translate(-50%, -200%);
+    }
+    to {
+        transform: translate(-50%, 32px);
+    }
+}
+
+@keyframes feedbackSlideOut {
+    from {
+        transform: translate(-50%, 32px);
+    }
+    to {
+        transform: translate(-50%, -200%);
+    }
+}
+
+/* Adatlap */
+
+#detailsContainer {
+    
+    display:flex; 
+    width: 100%; 
+    margin:auto;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    position: fixed;
+    bottom: 0;             /* Az elem az oldal aljához lesz igazítva */
+    left: 0;
+    right: 0;
+
+}
+
+#detailsDialog {
+    
+    max-width:600px; 
+    width:100%;
+    margin:auto;
+    background-color: var(--white);
+    margin-top: 24px;
+    padding: 24px;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+    position: relative;
+    display: none;
+}
+
+.formRow {
+    
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    gap:16px;
+    width:100%;
+    border-bottom: 1px solid var(--lighter);
+    
+}
+
+.formRow:last-child {
+  
+}
+
+select:focus {
+    outline: none;
+    border: none;
+}
+
+.hidedSelector {
+    
+    position:absolute; 
+    height:24px;
+    width:24px;
+    background-color: var(--white);
+    border: 0px solid var(--white);
+    color: var(--white);
+    opacity: 0;
+    
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input::-webkit-list-button {
+  display: none;
+}
+
+
+input[type=text] {
+    border: 0px;
+    font-size: 16px;
+    color: var(--black);
+    font-weight: 600;
+    height: 24px;
+    width: 100%;
+    font-family: Inter;
+
+    padding-top:16px;
+    padding-bottom: 16px;
+
+}
+input[type=number] {
+    border: 0px;
+    font-size: 16px;
+    color: var(--black);
+    font-weight: 600;
+    height: 24px;
+    width: 100%;
+    font-family: Inter;
+
+    padding-top:16px;
+    padding-bottom: 16px;
+
+}
+input:focus {
+    outline: none;
+    border: none;
+}
+input::placeholder {
+    color: var(--grey);
+    font-weight: 300;
+}
+input#itemName {
+    font-size: 24px;
+    padding-left: 0px;
+}
+
+input#dName {
+    border: 0px;
+    font-size: 24px;
+    font-weight: 600;
+    height: 48px;
+    font-family: Inter;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #ffffff;
+}
+
+
+p {
+    padding: 0px;
+    margin: 0px;
+    font-family: Inter;
+    font-weight: 400;
+}
+
+p.label {
+    font-size: 14px;
+    color: var(--grey);
+    padding-left: 8px;
+    font-weight: 400;
+    font-family: Inter;
+}
+
+.listGroup {
+    padding-bottom: 16px;
+    padding-top: 24px;
+    color: var(--dark);
+    font-weight: 300;
+}
+
+#spinner {
+    
+    display:none; 
+    width: 100%; 
+    margin:auto;
+    align-items: center; 
+    justify-content: center; 
+    position: fixed;
+    top: 0px; 
+    height: 100%;
+    z-index: 400;
+}
+
+.button {
+    
+    text-align: center;
+    font-family: Inter;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    vertical-align: middle;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 400px;    
+    height: 48px;
+    line-height: 48px;
+    cursor: pointer;
+}
+
+.button.primary {
+    background-color: var(--black);
+    color: var(--white);
+    border: 1px solid var(--black);
+}
+
+.button.disabled {
+    background-color: var(--lighter);
+    color: var(--white);
+    border: 1px solid var(--lighter);
+    cursor:default;
+}
+.button.hided {
+    background-color: transparent;
+    color: var(--white);
+    border: 1px solid var(--white);
+    cursor:default;
+}
+
+.button.secondary {
+    background-color: var(--white);
+    color: var(--black);
+    border: 1px solid var(--black);
+
+}
+.button.delete {
+    background-color: rgba(241,110,110,.03);
+    color: var(--red);
+    border: 1px solid rgba(241,110,110,.03);
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    width:auto;
+    padding-left: 12px;
+    padding-right: 12px;
+    gap:8px;
+
+}
+
+#submitUpdate {
+    width:auto;
+    padding-left: 48px;
+    padding-right: 48px;
+}
+
+#addButton {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    background-color: black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.hideit {
+    display: none;
+}
+
+.Yes.payed {
+    color: var(--black);
+}
+.No.payed {
+    color: var(--grey);
+}
+img.Yes {
+    content: url(svg/yes.svg);
+}
+img.No {
+    content: url(svg/no.svg);
+}
+
+.No.amount {
+    font-weight: 300;
+    color: var(--grey);
+}
+.Yes.amount {
+    font-weight: 600;
+    color: var(--black);
+}
+
+#list {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Az oldal teljes magasságát kitölti */
+    /* padding-top: 56px; */
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    padding-top: calc(var(--header-height, 0px) - 240px); /* A `headerContainer` padding és dinamikus magasság */
+}
+
+
+#items-container {
+    padding-top:167px;
+    flex: 1;
+}
+
+
+
+.row {
+
+    cursor: pointer; 
+    background-color:var(--white); 
+    padding:16px; 
+    margin-bottom:8px; 
+    border-radius: 8px;
+    display:flex; 
+    flex-direction: row;
+    gap:16px
+
+}
+
+.row.Yes {
+
+    background-color:#f8f8f8; 
+
+}
+.row.No {
+
+    background-color:var(--white); 
+
+}
+
+
+#pay_toggle {
+    border: 0px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    height: 48px;
+    background-color: #f6f6f6;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-family: Inter;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+#show_toggle {
+    font-size: 13px;
+    font-weight: 400;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border: 0px;
+    border-radius: 32px;
+    width: inherit;
+    font-family: Inter;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background-color: var(--light);
+    color: var(--grey);
+    position: fixed;
+    bottom: 48px;
+    left:50%;
+    transform: translateX(-50%);
+    z-index:100;
+}
+
+
+.lds-roller,
+.lds-roller div,
+.lds-roller div:after {
+  box-sizing: border-box;
+}
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7.2px;
+  height: 7.2px;
+  border-radius: 50%;
+  background: var(--grey);
+  margin: -3.6px 0 0 -3.6px;
+}
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+  top: 62.62742px;
+  left: 62.62742px;
+}
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+  top: 67.71281px;
+  left: 56px;
+}
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+  top: 70.90963px;
+  left: 48.28221px;
+}
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+  top: 70.90963px;
+  left: 31.71779px;
+}
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+  top: 67.71281px;
+  left: 24px;
+}
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+  top: 62.62742px;
+  left: 17.37258px;
+}
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12.28719px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

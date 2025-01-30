@@ -1,0 +1,72 @@
+{
+    "appFooterVersion": "Dagobert 0.4.3",
+    
+    "paid": "Paid",
+    "notPaid": "Not Paid",
+    
+    "itemLabel": "Item",
+    "itemName": "Item Name",
+    "itemCategory": "Category (Bills, Entertainment, ...)",
+    "itemAmount": "Amount",
+    "itemDate": "Date",
+    "itemPayment": "Payment mode",
+    "itemComment": "Comment",
+        
+    "filterCategory": "by Category",
+    "filterNotPaid": "Not paid only",
+    "filterDate": "by Date",
+    "filterPayment": "by Payment mode",
+    
+    "cancelNew": "Cancel",
+    "submitNew": "Submit",
+    "submitUpdate": "Update",
+    "deleteItem": "Delete Item",
+    "areYouSure": "Are you sure you want to delete this item?",
+    "emptyTitle": "Add your first item!",
+    "emptyCTA": "Utility bill, Streaming subscription, mortgage, ...",
+    "newButton": "Add item",
+    
+    "feedbackLink": "Add feedback",
+    "feedbackLabel": "Ideas, thoughts, bugs",
+    "feedbackDescription": "If you have any ideas on how this app could be improved, found an issue, or just want to share your thoughts, please let me know!",
+    "feedback": "Your feedback",
+    "feedbackCancel": "Cancel",
+    "feedbackSend": "Send",
+    "feedbackThanksText": "Thanks, you are awesome!",
+    
+    "privacyLink": "Privacy",
+    "contactLink": "Contact",
+    "logOutLink": "Logout",
+    
+    "heroUVP": "Easily manage your recurring expenses!",
+    "heroDescription": "Dagobert is a simple, mobile-friendly app that helps you organize and track your recurring transactions, such as subscriptions, utility bills, or other regular expenses.",
+    "heroValue": "If you've been tracking these in Google Sheets, Dagobert makes it faster and more convenient, tailored specifically to the needs of mobile users. If you haven't been tracking them at all, now might be the perfect time to start.",
+    "authButton": "Let's start",
+    
+    "autoSheetHead": "Automatic Google Sheet Creation and Updates",
+    "autoSheetDesc": "Dagobert automatically creates a Google Sheet for the next three months, allowing you to easily manage your recurring expenses. During the beta testing period, you can manually update these three months, with further automations planned for the future.",
+    "mobileLoveHead": "Designed Specifically for Mobile Use",
+    "mobileLoveDesc": "Most transactions happen on mobile these days, and Dagobert is built with this in mind. The app features a clean, easy-to-navigate interface that you can access anywhere, anytime, making it simpler to manage your expenses.",
+    "freeHead": "Free, and Will Always Be Free",
+    "freeDesc": "Dagobert is completely free, and we have no plans to introduce fees or hidden costs in the future. All features of the app are freely accessible.",
+    "secureHead": "Maximum Security",
+    "secureDesc": "We understand that financial data is sensitive information. Dagobert saves your data directly to your own Google Drive, ensuring that no one else has access to it. Data management relies entirely on Google’s secure system, so your information is always protected.",
+    "betaHead": "Beta Testing Period",
+    "betaDesc": "Dagobert is currently in beta, and during the first three months, our goal is to gather as much feedback as possible. Your ideas and suggestions help me tailor the app to better meet your needs.",
+    "homeScreenHead": "Easy Access with One Tap",
+    "homeScreenDesc": "Dagobert can be easily added to your mobile home screen like a native app. This allows it to run in full-screen mode without a browser frame, providing a faster, cleaner, and more user-friendly experience.",
+    
+    "homeScreenStep1": "Open the Dagobert app in your browser.",
+    "homeScreenStep2": "Tap the browser’s 'Add to Home Screen' option.",
+    "homeScreenStep3": "It will be added as an icon on your home screen, allowing you to access the app with a single tap.",
+    "statLabelPaid": "Paid Total",
+    "statLabelNotPaid": "Not Paid Total",
+    
+    "frequency": "Frequency",
+    "0frequency": "No frequency",
+    "1frequency": "Every month",
+    "3frequency": "Every 3 months",
+    "6frequency": "Every 6 months",
+    "12frequency": "Every year"
+
+}

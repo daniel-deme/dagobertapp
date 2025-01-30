@@ -1,0 +1,10 @@
+{
+    "paid": "Fizetve",
+    "notPaid": "Nincs fizetve",
+    "itemName": "Tétel neve",
+    "itemCategory": "Kategória",
+    "itemAmount": "Összeg",
+    "itemDate": "Dátum",
+    "itemPayment": "Fizetés módja",
+    "itemComment": "Megjegyzés"
+}

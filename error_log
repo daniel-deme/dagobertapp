@@ -1,0 +1,2 @@
+[10-Nov-2024 18:06:23 Europe/Budapest] PHP Warning:  file_get_contents(https://script.google.com/macros/s/AKfycbwHbPkKcnslhPKT-xBh_JkEXnu0gv3x61xRMCpHfWdtWRfVSQ6OtIHp42oRgfxPSEPE/exec): Failed to open stream: HTTP request failed! HTTP/1.0 411 Length Required
+ in /home/danield1/dagobertapp.com/feedback.php on line 18
