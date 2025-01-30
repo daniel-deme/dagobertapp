@@ -18,6 +18,6 @@ jobs:
           server: ftp://cpanel32.tarhelypark.hu
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: .  # Ez a projekt gyökérkönyvtára
+          local-dir: ./  # Ez a projekt gyökérkönyvtára
           server-dir: /dagobertapp.com/staging  # Ide töltjük az adatokat
           dangerous-clean-slate: false  # Csak a módosított fájlokat tölti fel
