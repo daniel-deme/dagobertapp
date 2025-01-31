@@ -617,29 +617,43 @@ async function removeItem() {
     showSpinner();
 
     try {
-        const userChoice = prompt("Mit szeretnél törölni?\n1: Csak az adott elem\n2: Az adott elem és az összes utána következő\n3: Az összes elem az adatbázisban");
+        // Ellenőrizzük az elem frequency értékét
+        const currentItem = dataMap[activeID];
+        const frequencyValue = currentItem.frequency ? currentItem.frequency : "";
 
-        if (!["1", "2", "3"].includes(userChoice)) {
-            console.log("Törlés megszakítva.");
-            return;
+        // Ha van frequency, kérdezzük meg, hogyan kezelje a törlést
+        let userChoice;
+        if (frequencyValue) {
+            userChoice = prompt("Mit szeretnél törölni?\n1: Csak az adott elem\n2: Az adott elem és az összes utána következő\n3: Az összes elem az adatbázisban");
+            if (!["1", "2", "3"].includes(userChoice)) {
+                console.log("Törlés megszakítva.");
+                return;
+            }
+        } else {
+            const confirmDelete = confirm("Biztosan törölni szeretnéd az adott elemet?");
+            if (!confirmDelete) {
+                console.log("Törlés megszakítva.");
+                return;
+            }
+            userChoice = "1";  // Ha nincs frequency, akkor alapértelmezetten csak az aktuális elemet töröljük
         }
 
         switch (userChoice) {
-            case "1":
+            case "1":  // Csak az aktuális elem törlése
                 await deleteRow(activeTab, activeID);
                 delete dataMap[activeID];  // Csak az aktuális hónapból töröljük lokálisan
                 break;
-            case "2":
+            case "2":  // Az aktuális és az összes utána következő hónap
                 await deleteFollowingItems(activeTab, activeID);
-                delete dataMap[activeID];  // Törlés az aktuális hónapból lokálisan
+                delete dataMap[activeID];  // Az aktuális hónapból is töröljük
                 break;
-            case "3":
+            case "3":  // Az összes előfordulás törlése az adatbázisban
                 await deleteAllOccurrences(activeID);
-                delete dataMap[activeID];  // Törlés az aktuális hónapból lokálisan
+                delete dataMap[activeID];  // Az aktuális hónapból is töröljük
                 break;
         }
 
-        renderItems(Object.values(dataMap));  // Újrarenederlés a lokális adatokból
+        renderItems(Object.values(dataMap));  // Lokális újrarenderelés
         fadeOutFader();
         hideSpinner();
         console.log("Törlési művelet sikeresen befejeződött.");
@@ -648,30 +662,36 @@ async function removeItem() {
     }
 }
 
+// Csak az aktuális sor törlése a Google Sheetből
+async function deleteRow(sheetName, itemId) {
+    const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(sheetName)}`);
+    const data = await response.json();
+    const rowIndex = data.values.findIndex(row => row[0] === itemId.toString());
 
-// Csak az aktuális sor törlése
-async function deleteRow(sheetName, rowIndex) {
-    const deleteRequest = {
-        requests: [{
-            deleteDimension: {
-                range: {
-                    sheetId: await getSheetId(sheetName),
-                    dimension: "ROWS",
-                    startIndex: rowIndex,
-                    endIndex: rowIndex + 1
+    if (rowIndex !== -1) {
+        const deleteRequest = {
+            requests: [{
+                deleteDimension: {
+                    range: {
+                        sheetId: await getSheetId(sheetName),
+                        dimension: "ROWS",
+                        startIndex: rowIndex,
+                        endIndex: rowIndex + 1
+                    }
                 }
-            }
-        }]
-    };
+            }]
+        };
 
-    await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}:batchUpdate`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(deleteRequest)
-    });
+        await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}:batchUpdate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(deleteRequest)
+        });
+    }
 }
+
 
 // Az adott elem és az összes utána következő törlése
 async function deleteFollowingItems(sheetName, itemId) {
