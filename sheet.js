@@ -624,34 +624,22 @@ async function removeItem() {
             return;
         }
 
-        const metadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
-        const metadata = await metadataResponse.json();
-        const sheet = metadata.sheets.find(sheet => sheet.properties.title === activeTab);
-
-        if (!sheet) return;
-
-        const sheetId = sheet.properties.sheetId;
-        const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(activeTab)}`);
-        const data = await response.json();
-        const rowIndex = data.values.findIndex(row => row[0] === activeID.toString());
-
-        if (rowIndex === -1) {
-            console.log("A megadott elem nem található.");
-            return;
-        }
-
         switch (userChoice) {
             case "1":
-                await deleteRow(activeTab, rowIndex);
+                await deleteRow(activeTab, activeID);
+                delete dataMap[activeID];  // Csak az aktuális hónapból töröljük lokálisan
                 break;
             case "2":
                 await deleteFollowingItems(activeTab, activeID);
+                delete dataMap[activeID];  // Törlés az aktuális hónapból lokálisan
                 break;
             case "3":
                 await deleteAllOccurrences(activeID);
+                delete dataMap[activeID];  // Törlés az aktuális hónapból lokálisan
                 break;
         }
 
+        renderItems(Object.values(dataMap));  // Újrarenederlés a lokális adatokból
         fadeOutFader();
         hideSpinner();
         console.log("Törlési művelet sikeresen befejeződött.");
@@ -659,6 +647,7 @@ async function removeItem() {
         console.error("Hiba a törlési folyamat során:", error);
     }
 }
+
 
 // Csak az aktuális sor törlése
 async function deleteRow(sheetName, rowIndex) {
