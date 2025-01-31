@@ -613,107 +613,116 @@ function newDataMapId() {
 }
 
 async function removeItem() {
-    if (!confirm(translations["areYouSure"])) return;
     fadeOutDetails();
     showSpinner();
 
     try {
-        const sheetName = activeTab;
-        const itemId = activeID;
+        const userChoice = prompt("Mit szeretnél törölni?\n1: Csak az adott elem\n2: Az adott elem és az összes utána következő\n3: Az összes elem az adatbázisban");
 
-        if (!sheetName || !itemId) {
-            throw new Error("A sheetName vagy az itemId hiányzik.");
-        }
-
-        const [currentYear, currentMonth] = new Date().toISOString().split("T")[0].split("-").map(Number);
-        const [targetYear, targetMonth] = sheetName.split("-").map(Number);
-
-        // Ha múltbéli hónap, azonnal töröljük
-        if (targetYear < currentYear || (targetYear === currentYear && targetMonth < currentMonth)) {
-            await deleteRow(sheetName, itemId);
-            console.log("A múltbéli hónapban lévő elem sikeresen törölve.");
+        if (!["1", "2", "3"].includes(userChoice)) {
+            console.log("Törlés megszakítva.");
             return;
         }
 
-        // Ha aktuális vagy jövőbeli hónap, kérdezzük meg a felhasználót
-        const userChoice = confirm("Törölni szeretnéd a teljes sorozatot vagy csak az aktuális elemet?\nOK: Teljes sorozat törlése\nMégse: Csak az aktuális elem törlése");
+        const metadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
+        const metadata = await metadataResponse.json();
+        const sheet = metadata.sheets.find(sheet => sheet.properties.title === activeTab);
 
-        if (userChoice) {
-            // Teljes sorozat törlése
-            await deleteRecurringRows(sheetName, itemId);
-            console.log("A teljes sorozat sikeresen törölve.");
-        } else {
-            // Csak az aktuális elemet töröljük
-            await deleteRow(sheetName, itemId);
-            console.log("Csak az aktuális elem került törlésre.");
-        }
+        if (!sheet) return;
 
-        // Frissítjük a megjelenített adatokat
-        delete dataMap[itemId];
-        renderItems(Object.values(dataMap));
-        fadeOutFader();
-        hideSpinner();
-
-    } catch (error) {
-        console.error("Hiba a removeItem függvényben:", error);
-    }
-}
-
-async function deleteRow(sheetName, itemId) {
-    try {
-        const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(sheetName)}!A:Z`);
+        const sheetId = sheet.properties.sheetId;
+        const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(activeTab)}`);
         const data = await response.json();
+        const rowIndex = data.values.findIndex(row => row[0] === activeID.toString());
 
-        const rowIndex = data.values.findIndex(row => row[0] === itemId.toString());
         if (rowIndex === -1) {
             console.log("A megadott elem nem található.");
             return;
         }
 
-        const requestBody = {
-            requests: [
-                {
-                    deleteDimension: {
-                        range: {
-                            sheetId: await getSheetId(sheetName),
-                            dimension: "ROWS",
-                            startIndex: rowIndex,
-                            endIndex: rowIndex + 1
-                        }
-                    }
-                }
-            ]
-        };
+        switch (userChoice) {
+            case "1":
+                await deleteRow(activeTab, rowIndex);
+                break;
+            case "2":
+                await deleteFollowingItems(activeTab, activeID);
+                break;
+            case "3":
+                await deleteAllOccurrences(activeID);
+                break;
+        }
 
-        await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}:batchUpdate`, {
-            method: "POST",
-            body: JSON.stringify(requestBody),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-        console.log(`A ${itemId} elem sikeresen törölve a(z) ${sheetName} tabról.`);
+        fadeOutFader();
+        hideSpinner();
+        console.log("Törlési művelet sikeresen befejeződött.");
     } catch (error) {
-        console.error("Hiba a sor törlése közben:", error);
+        console.error("Hiba a törlési folyamat során:", error);
     }
 }
 
-async function deleteRecurringRows(sheetName, itemId) {
-    const sheetMetadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
-    const sheetMetadata = await sheetMetadataResponse.json();
-    const tabs = sheetMetadata.sheets.map(sheet => sheet.properties.title);
+// Csak az aktuális sor törlése
+async function deleteRow(sheetName, rowIndex) {
+    const deleteRequest = {
+        requests: [{
+            deleteDimension: {
+                range: {
+                    sheetId: await getSheetId(sheetName),
+                    dimension: "ROWS",
+                    startIndex: rowIndex,
+                    endIndex: rowIndex + 1
+                }
+            }
+        }]
+    };
 
-    // Az aktuális vagy jövőbeli tabok törlése
-    const [targetYear, targetMonth] = sheetName.split("-").map(Number);
+    await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}:batchUpdate`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(deleteRequest)
+    });
+}
+
+// Az adott elem és az összes utána következő törlése
+async function deleteFollowingItems(sheetName, itemId) {
+    const metadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
+    const metadata = await metadataResponse.json();
+    const tabs = metadata.sheets.map(sheet => sheet.properties.title);
+
+    const [currentYear, currentMonth] = sheetName.split("-").map(Number);
 
     for (const tab of tabs) {
         const [tabYear, tabMonth] = tab.split("-").map(Number);
-        if (tabYear > targetYear || (tabYear === targetYear && tabMonth >= targetMonth)) {
-            await deleteRow(tab, itemId);
+        if (tabYear > currentYear || (tabYear === currentYear && tabMonth >= currentMonth)) {
+            const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(tab)}`);
+            const data = await response.json();
+            const rowIndex = data.values.findIndex(row => row[0] === itemId.toString());
+
+            if (rowIndex !== -1) {
+                await deleteRow(tab, rowIndex);
+            }
         }
     }
 }
+
+// Az összes előfordulás törlése az összes hónapban
+async function deleteAllOccurrences(itemId) {
+    const metadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
+    const metadata = await metadataResponse.json();
+    const tabs = metadata.sheets.map(sheet => sheet.properties.title);
+
+    for (const tab of tabs) {
+        const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(tab)}`);
+        const data = await response.json();
+        const rowIndex = data.values.findIndex(row => row[0] === itemId.toString());
+
+        if (rowIndex !== -1) {
+            await deleteRow(tab, rowIndex);
+        }
+    }
+}
+
 
 async function getSheetId(sheetName) {
     const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
