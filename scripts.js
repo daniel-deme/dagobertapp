@@ -40,7 +40,6 @@ function getBrowserLanguage() {
 const language = getBrowserLanguage().slice(0, 2); // Csak az első két karakter 
 
 async function loadLanguageFile(language) {
-    console.log("GITHUB!");
     try {
         const response = await fetch(`locales/${language}.json`);
         if (!response.ok) throw new Error("Language file not found");
@@ -581,7 +580,7 @@ function renderItems(data) {
         document.getElementById("emptyState").style.display = "none";
         document.getElementById("filters").style.display = "flex";
         document.getElementById("items-container").style.display = "block";
-        filterList("category");
+        filterList("date");
     }
     
     

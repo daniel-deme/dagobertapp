@@ -284,8 +284,6 @@ async function createSheet(sheetName) {
     }
 }
 
-
-
 async function addDefaultHeaders(sheetName) {
     try {
         const defaultHeaders = ["ID", "Name", "Category", "Payment mode", "Date", "Amount", "Currency", "Frequency", "Paid", "Comment"];
@@ -393,3 +391,333 @@ async function updateItem() {
     }
 }
 
+
+
+
+// További hónapok frissítése a mező vagy teljes elem alapján
+async function updateFollowingItems(updateType, updatedData) {
+    const sheetMetadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
+    const sheetMetadata = await sheetMetadataResponse.json();
+    const tabs = sheetMetadata.sheets.map(sheet => sheet.properties.title);
+
+    const [currentYear, currentMonth] = activeTab.split("-").map(Number);
+
+    for (const tab of tabs) {
+        const [tabYear, tabMonth] = tab.split("-").map(Number);
+
+        if (tabYear > currentYear || (tabYear === currentYear && tabMonth > currentMonth)) {
+            const tabResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(tab)}`);
+            const tabData = await tabResponse.json();
+
+            if (!tabData.values || tabData.values.length === 0) continue;
+
+            const headers = tabData.values[0];
+            const rowIndex = tabData.values.slice(1).findIndex(row => row[headers.indexOf("ID")] === updatedData.id.toString());
+
+            if (rowIndex !== -1) {
+                const updatedRow = [...tabData.values[rowIndex]];
+
+                if (updateType === "frequency") {
+                    updatedRow[headers.indexOf("Frequency")] = updatedData.frequency;
+                } else if (updateType === "details") {
+                    ["Name", "Category", "Amount", "Currency", "Date", "Payment mode"].forEach(header => {
+                        updatedRow[headers.indexOf(header)] = updatedData[header.toLowerCase().replace(" ", "_")] || "";
+                    });
+                }
+
+                await updateRow(tab, rowIndex, updatedRow);
+            }
+        }
+    }
+}
+
+async function updateRow(tabName, rowIndex, updatedRow) {
+    const range = `${tabName}!A${rowIndex + 1}:Z${rowIndex + 1}`;
+    const requestBody = {
+        range,
+        values: [updatedRow],
+        majorDimension: "ROWS"
+    };
+
+    const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(range)}?valueInputOption=USER_ENTERED`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        throw new Error(`Hiba a sor frissítésekor: ${result.error.message}`);
+    }
+}
+
+async function addNewItem() {
+    fadeOutDetails();
+    showSpinner();
+
+    try {
+        // Az új sor azonosítója
+        const newId = newDataMapId();
+
+        // Az oszlopnevek (fejléc) lekérése
+        const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(activeTab)}!A1:Z1`);
+        const data = await response.json();
+
+        let headers = data.values ? data.values[0] : [];
+
+        // Ha a fejléc nem tartalmazza a Frequency és Currency oszlopokat, hozzáadjuk azokat
+        const requiredHeaders = ["ID", "Name", "Category", "Payment mode", "Paid", "Date", "Amount", "Currency", "Comment", "Frequency"];
+        let headersToUpdate = false;
+
+        requiredHeaders.forEach(header => {
+            if (!headers.includes(header)) {
+                headers.push(header);
+                headersToUpdate = true;
+            }
+        });
+
+        // Ha új oszlopokat adtunk hozzá, frissítsük a sheet fejlécét
+        if (headersToUpdate) {
+            await updateSheetHeaders(activeTab, headers);
+        }
+
+        // Az oszlopnevekhez tartozó adatok összegyűjtése
+        const valuesToInsert = Array(headers.length).fill(""); // Üres tömb az oszlopok számára
+
+        const newData = {
+            ID: newId.toString(),
+            Name: document.getElementById('itemName').value,
+            Category: document.getElementById('itemCategory').value,
+            "Payment mode": document.getElementById('itemPayment').value,
+            Paid: document.getElementById('itemPaid').value,
+            Date: document.getElementById('itemDate').value,
+            Amount: document.getElementById('itemAmount').value,
+            Currency: document.getElementById('itemCurrency').textContent,
+            Comment: document.getElementById('itemComment').value,
+            Frequency: document.getElementById("frequencySelect").value
+        };
+
+        // Az oszlopokhoz rendeljük az értékeket
+        headers.forEach((header, index) => {
+            if (newData[header]) {
+                valuesToInsert[index] = newData[header];
+            }
+        });
+
+        // Kérelem a sor hozzáadására az aktuális hónaphoz
+        await addRowToSheet(activeTab, valuesToInsert);
+
+        // A frequency értékének megfelelő jövőbeli tabok bejárása és az elem másolása
+        const frequency = parseInt(newData.Frequency, 10);
+        if (frequency > 0) {
+            await addToFutureTabs(activeTab, frequency, valuesToInsert);
+        }
+
+        // Frissítjük a megjelenített adatokat
+        dataMap[newId] = {
+            id: newId,
+            name: newData.Name,
+            category: newData.Category,
+            payment_mode: newData["Payment mode"],
+            paid: newData.Paid,
+            date: newData.Date,
+            amount: newData.Amount,
+            currency: newData.Currency,
+            comment: newData.Comment,
+            frequency: newData.Frequency
+        };
+
+        renderItems(Object.values(dataMap));
+        fadeOutFader();
+        hideSpinner();
+
+    } catch (error) {
+        console.error('Hiba a addNewItem függvényben:', error);
+    }
+}
+
+async function addRowToSheet(tabName, valuesToInsert) {
+    const requestBody = {
+        values: [valuesToInsert],
+        majorDimension: "ROWS"
+    };
+
+    const appendResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(tabName)}:append?valueInputOption=USER_ENTERED`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    if (!appendResponse.ok) {
+        const result = await appendResponse.json();
+        throw new Error(`Hiba történt a(z) ${tabName} tabhoz történő hozzáadás során: ${result.error.message}`);
+    }
+}
+
+async function addToFutureTabs(currentTab, frequency, valuesToInsert) {
+    const [currentYear, currentMonth] = currentTab.split("-").map(Number);
+
+    // Az összes létező tab lekérése
+    const sheetMetadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
+    const sheetMetadata = await sheetMetadataResponse.json();
+    const tabs = sheetMetadata.sheets.map(sheet => sheet.properties.title);
+
+    // Jövőbeli tabok bejárása és az érték hozzáadása
+    for (const tab of tabs) {
+        const [tabYear, tabMonth] = tab.split("-").map(Number);
+        const monthDifference = (tabYear - currentYear) * 12 + (tabMonth - currentMonth);
+
+        if (monthDifference > 0 && monthDifference % frequency === 0) {
+            await addRowToSheet(tab, valuesToInsert);
+        }
+    }
+}
+
+async function updateSheetHeaders(tabName, headers) {
+    const columnRange = `A1:${String.fromCharCode(64 + headers.length)}1`; // Dinamikus tartomány kiszámítása
+
+    const requestBody = {
+        range: `${tabName}!${columnRange}`,
+        values: [headers],
+        majorDimension: "ROWS"
+    };
+
+    const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(tabName)}!${columnRange}?valueInputOption=USER_ENTERED`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) {
+        const result = await response.json();
+        throw new Error(`Hiba a fejléc frissítésekor: ${result.error.message}`);
+    }
+}
+
+
+
+function newDataMapId() {
+    const keys = Object.keys(dataMap); // Az összes kulcs megszerzése
+    if (keys.length > 0) {
+        const lastId = parseInt(keys[keys.length - 1], 10); // Az utolsó id számmá konvertálása
+        return lastId + 1; // Visszaadjuk az egyel nagyobb id-t
+    } else {
+        return 1; // Ha nincs elem, akkor kezdje az id-t 1-től
+    }
+}
+
+async function removeItem() {
+    if (!confirm(translations["areYouSure"])) return;
+    fadeOutDetails();
+    showSpinner();
+
+    try {
+        const sheetName = activeTab;
+        const itemId = activeID;
+
+        if (!sheetName || !itemId) {
+            throw new Error("A sheetName vagy az itemId hiányzik.");
+        }
+
+        const [currentYear, currentMonth] = new Date().toISOString().split("T")[0].split("-").map(Number);
+        const [targetYear, targetMonth] = sheetName.split("-").map(Number);
+
+        // Ha múltbéli hónap, azonnal töröljük
+        if (targetYear < currentYear || (targetYear === currentYear && targetMonth < currentMonth)) {
+            await deleteRow(sheetName, itemId);
+            console.log("A múltbéli hónapban lévő elem sikeresen törölve.");
+            return;
+        }
+
+        // Ha aktuális vagy jövőbeli hónap, kérdezzük meg a felhasználót
+        const userChoice = confirm("Törölni szeretnéd a teljes sorozatot vagy csak az aktuális elemet?\nOK: Teljes sorozat törlése\nMégse: Csak az aktuális elem törlése");
+
+        if (userChoice) {
+            // Teljes sorozat törlése
+            await deleteRecurringRows(sheetName, itemId);
+            console.log("A teljes sorozat sikeresen törölve.");
+        } else {
+            // Csak az aktuális elemet töröljük
+            await deleteRow(sheetName, itemId);
+            console.log("Csak az aktuális elem került törlésre.");
+        }
+
+        // Frissítjük a megjelenített adatokat
+        delete dataMap[itemId];
+        renderItems(Object.values(dataMap));
+        fadeOutFader();
+        hideSpinner();
+
+    } catch (error) {
+        console.error("Hiba a removeItem függvényben:", error);
+    }
+}
+
+async function deleteRow(sheetName, itemId) {
+    try {
+        const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${encodeURIComponent(sheetName)}!A:Z`);
+        const data = await response.json();
+
+        const rowIndex = data.values.findIndex(row => row[0] === itemId.toString());
+        if (rowIndex === -1) {
+            console.log("A megadott elem nem található.");
+            return;
+        }
+
+        const requestBody = {
+            requests: [
+                {
+                    deleteDimension: {
+                        range: {
+                            sheetId: await getSheetId(sheetName),
+                            dimension: "ROWS",
+                            startIndex: rowIndex,
+                            endIndex: rowIndex + 1
+                        }
+                    }
+                }
+            ]
+        };
+
+        await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}:batchUpdate`, {
+            method: "POST",
+            body: JSON.stringify(requestBody),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        console.log(`A ${itemId} elem sikeresen törölve a(z) ${sheetName} tabról.`);
+    } catch (error) {
+        console.error("Hiba a sor törlése közben:", error);
+    }
+}
+
+async function deleteRecurringRows(sheetName, itemId) {
+    const sheetMetadataResponse = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
+    const sheetMetadata = await sheetMetadataResponse.json();
+    const tabs = sheetMetadata.sheets.map(sheet => sheet.properties.title);
+
+    // Az aktuális vagy jövőbeli tabok törlése
+    const [targetYear, targetMonth] = sheetName.split("-").map(Number);
+
+    for (const tab of tabs) {
+        const [tabYear, tabMonth] = tab.split("-").map(Number);
+        if (tabYear > targetYear || (tabYear === targetYear && tabMonth >= targetMonth)) {
+            await deleteRow(tab, itemId);
+        }
+    }
+}
+
+async function getSheetId(sheetName) {
+    const response = await fetchWithToken(`https://sheets.googleapis.com/v4/spreadsheets/${sheetID}`);
+    const metadata = await response.json();
+    const sheet = metadata.sheets.find(sheet => sheet.properties.title === sheetName);
+    return sheet.properties.sheetId;
+}
